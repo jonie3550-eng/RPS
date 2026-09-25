@@ -1,1 +1,109 @@
+<!DOCTYPE html>
 
+<html>
+
+<head>
+
+  <title>Game RPS</title>
+
+</head>
+
+<body>
+
+  <nav>
+
+    <a href="index.html">Home</a> | 
+
+    <a href="game2.html">Game Baru</a>
+
+  </nav>
+
+  <div id="game">
+
+    <h2>Pilih satu:</h2>
+
+    <button onclick="play('Rock')">Rock</button>
+
+    <button onclick="play('Papper')">Papper</button>
+
+    <button onclick="play('Scissors')">Scissors</button>
+
+    
+
+    <p id="result">Skor: 0-0</p>
+
+  </div>
+
+  <button onclick="resetScore()">Reset Skor</button>
+
+  <script>
+
+    let skorUser = parseInt(localStorage.getItem('skorUser')) || 0;
+
+    let skorComp = parseInt(localStorage.getItem('skorComp')) || 0;
+
+    document.getElementById("result").innerText = `Skor: ${skorUser}-${skorComp}`;
+
+    function play(userChoice) {
+
+      const choices = ['Rock', 'Papper', 'Scissors'];
+
+      const compChoice = choices[Math.floor(Math.random() * 3)];
+
+      let result = "";
+
+      if (userChoice === compChoice) {
+
+        result = "Seri!";
+
+      } else if (
+
+        (userChoice === 'Rock' && compChoice === 'Scissors') ||
+
+        (userChoice === 'Papper' && compChoice === 'Rock') ||
+
+        (userChoice === 'Scissors' && compChoice === 'Papper')
+
+      ) {
+
+        result = "Kamu Menang!";
+
+        skorUser++;
+
+        localStorage.setItem('skorUser', skorUser);
+
+      } else {
+
+        result = "Kamu Kalah!";
+
+        skorComp++;
+
+        localStorage.setItem('skorComp', skorComp);
+
+      }
+
+      document.getElementById("result").innerText = 
+
+        `Kamu: ${userChoice} | Komputer: ${compChoice} -> ${result} (Skor: ${skorUser}-${skorComp})`;
+
+    }
+
+    function resetScore() {
+
+      skorUser = 0;
+
+      skorComp = 0;
+
+      localStorage.removeItem('skorUser');
+
+      localStorage.removeItem('skorComp');
+
+      document.getElementById("result").innerText = "Skor: 0-0";
+
+    }
+
+  </script>
+
+</body>
+
+  </html>
